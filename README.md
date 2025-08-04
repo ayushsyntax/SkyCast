@@ -1,174 +1,159 @@
 
 ---
 
-# 🌧️ SkyCast - Rainfall Prediction Application
+# **SkyCast – Rainfall Prediction Web App**
 
-**SkyCast** is a lightweight, intelligent, and user-friendly web application that predicts rainfall probability using state-of-the-art machine learning. Designed for tropical and subtropical coastal climates, it combines clean UI with accurate forecasts grounded in real weather data.
-
----
-
-## 🚀 Key Features
-
-* **🧭 Minimalist Interface**
-  Clean, intuitive design suitable for users of all backgrounds
-
-* **🔍 Smart Predictions**
-  Powered by a well-tuned XGBoost model trained on realistic weather data
-
-* **⚡ Instant Results**
-  Predicts rainfall probability, risk category, and offers useful, actionable advice
-
-* **📊 Built-In EDA Support**
-  Includes tools for quick analysis of weather trends and patterns
-
-* **✅ Robust Input Validation**
-  Catches inconsistencies (e.g., minimum > maximum temperature) before processing
+A lightweight application for predicting rainfall probability using machine learning. Built with simplicity in mind, **SkyCast** delivers real-time forecasts optimized for tropical and subtropical coastal climates. It pairs clean interface design with data-driven accuracy.
 
 ---
 
-## 🛠️ Installation
+## **Features**
 
-**1. Clone the repository**
+* **Minimal UI**
+  Straightforward layout. No distractions. Built for usability.
+
+* **ML-Driven Forecasts**
+  Core predictions powered by an XGBoost classifier trained on real-world weather data.
+
+* **Instant Output**
+  Generates rainfall probability, assigns a risk level, and suggests practical advice.
+
+* **EDA Utilities**
+  Built-in tools for quick visual and statistical exploration of weather patterns.
+
+* **Input Sanity Checks**
+  Prevents errors like inverted temperature ranges or empty fields.
+
+---
+
+## **Installation**
 
 ```bash
 git clone https://github.com/your-username/SkyCast.git
 cd SkyCast
-```
-
-**2. Install dependencies**
-
-```bash
 pip install -r requirements.txt
-```
-
-**3. Run the app**
-
-```bash
 streamlit run app.py
 ```
 
-Then open your browser to `http://localhost:8501` to access the app.
+App will launch at `http://localhost:8501`.
 
 ---
 
-## 📋 How to Use
+## **Usage**
 
-1. **Fill in the input fields:**
+1. Provide the following inputs:
 
-   * `Date`: Select via calendar
-   * `Max Temperature (°C)`
-   * `Min Temperature (°C)`
-   * `Humidity (%)`: Use slider
-   * `Cloud Cover`: Choose from *Clear*, *Partly Cloudy*, *Cloudy*
-   * `Wind Speed`: Choose from *Low*, *Moderate*, *High*
+   * `Date`
+   * `Max Temp (°C)` / `Min Temp (°C)`
+   * `Humidity (%)` (slider)
+   * `Cloud Cover`: *Clear*, *Partly Cloudy*, *Cloudy*
+   * `Wind Speed`: *Low*, *Moderate*, *High*
 
-2. **Click "Predict Rainfall"**
-   The model will analyze your inputs and display:
+2. Click **“Predict Rainfall”**
+   Outputs:
 
-   * 🌧️ **Rain Probability** (in %)
-   * ⚠️ **Risk Level**: *Low*, *Medium*, or *High*
-   * 💡 **Advice**: E.g., “Bring an umbrella!”
-
----
-
-## 🔍 How It Works
-
-SkyCast blends user input with engineered features for precise prediction:
-
-* **Feature Engineering**
-
-  * Converts date into cyclical time features (day of year → sine/cosine)
-  * Calculates temperature range and combines features like humidity × cloud
-  * Automatically handles missing or ambiguous values with realistic defaults
-
-* **Machine Learning Model**
-
-  * Uses an **XGBoost classifier**, trained on the [Kaggle Playground Series - S5E3](https://www.kaggle.com/competitions/playground-series-s5e3) dataset
-  * Produces a probability score for rainfall based on the current inputs
-
-* **Post-Prediction Mapping**
-
-  * Translates probability into **risk categories**
-  * Displays clear, contextual **recommendations** for users
+   * **Probability (% chance)**
+   * **Risk Level**: Low / Medium / High
+   * **Advice** (e.g., “Carry an umbrella.”)
 
 ---
 
-## 📊 Exploratory Data Analysis (EDA)
+## **Behind the Model**
 
-SkyCast includes tools for deep insights into weather data:
+### **Feature Engineering**
 
-| Tool         | Use Case                              |
-| ------------ | ------------------------------------- |
-| `numpy`      | High-performance calculations         |
-| `pandas`     | Data manipulation and cleaning        |
-| `matplotlib` | Visualization of trends and anomalies |
-| `seaborn`    | Correlation heatmaps, distributions   |
+* Date → cyclical features (day of year via sine/cosine)
+* Derived metrics: temp range, humidity × cloud cover
+* Fallback defaults for missing values
 
-All EDA logic and plots are available in `projectrain.py`.
+### **Model Architecture**
 
----
+* Core: **XGBoost Classifier**
+* Dataset: [Kaggle Playground S5E3](https://www.kaggle.com/competitions/playground-series-s5e3)
+* Output: Probability score + risk class
 
-## ⚙️ Technical Overview
+### **Postprocessing**
 
-| Component     | Description                          |
-| ------------- | ------------------------------------ |
-| **Model**     | XGBoost Classifier                   |
-| **Baseline**  | Logistic Regression (for comparison) |
-| **AUC-ROC**   | > 0.90 (XGBoost) / \~0.88 (LogReg)   |
-| **Languages** | Python 3.x                           |
-| **Framework** | Streamlit                            |
-| **Features**  | 16 (including engineered ones)       |
+* Risk thresholds based on calibrated cutoffs
+* Recommendations mapped to risk outcome
 
 ---
 
-## 📁 Project Structure
+## **EDA Toolkit**
+
+Available in `projectrain.py`:
+
+| Library      | Use                         |
+| ------------ | --------------------------- |
+| `numpy`      | Vectorized calculations     |
+| `pandas`     | Data manipulation           |
+| `matplotlib` | Line plots, trends          |
+| `seaborn`    | Correlation + distributions |
+
+---
+
+## **System Overview**
+
+| Component      | Detail                       |
+| -------------- | ---------------------------- |
+| Model          | XGBoost Classifier           |
+| Baseline       | Logistic Regression          |
+| AUC-ROC        | XGB: > 0.90 · LogReg: \~0.88 |
+| Framework      | Streamlit                    |
+| Python         | 3.x                          |
+| Total Features | 16 (with engineered inputs)  |
+
+---
+
+## **Directory Layout**
 
 ```
 SkyCast/
 ├── app.py              # Streamlit app logic
-├── projectrain.py      # EDA, preprocessing, training
-├── final_model.pkl     # Trained model pipeline
-├── requirements.txt    # All Python dependencies
-└── README.md           # This documentation
+├── projectrain.py      # EDA + preprocessing pipeline
+├── final_model.pkl     # Serialized model object
+├── requirements.txt    # Dependencies list
+└── README.md           # Documentation
 ```
 
 ---
 
-## 🏆 Dataset and Model Performance
+## **Performance Snapshot**
 
-* **Source:** [Kaggle Playground Series - S5E3](https://www.kaggle.com/competitions/playground-series-s5e3)
-* **Coverage:** Six years of meteorological data, coastal climates
-* **Label Balance:** 75% rain, 25% no rain (imbalance handled via weighting)
-* **Performance Metrics:**
+* Dataset: 6 years of coastal climate data
+* Class Ratio: 75% rain / 25% no rain
+* Imbalance: Handled via class weighting
+* Metrics:
 
-  * **XGBoost AUC-ROC:** > **0.90**
-  * **Logistic Regression AUC-ROC:** \~ **0.88**
+  * **XGBoost AUC-ROC**: > 0.90
+  * **LogReg AUC-ROC**: \~0.88
 
 ---
 
-## 🌍 Climate Focus
+## **Target Climate**
 
 Designed for:
 
-* **Tropical/Subtropical Zones**: e.g., Southeast Asia, South India, coastal Australia
-* **Frequent Conditions**: High humidity, cyclical cloud cover, moderate wind patterns
+* **Regions**: Southeast Asia, South India, coastal Australia
+* **Patterns**: High humidity · Cloud cycles · Moderate wind
 
 ---
 
-## 🧠 Modeling and EDA Insights
+## **Modeling Notes**
 
-* Clean, complete dataset suitable for binary classification
-* Top predictors: humidity, cloud cover, dew point, temperature range
-* Engineered temporal features enhance seasonal awareness
-* Class imbalance managed with weighting and stratified validation
-* Reproducible pipeline available in `projectrain.py`
+* Clean binary classification task
+* Top features: humidity, cloud cover, dew point, temp range
+* Seasonal signal captured via cyclical time
+* Stratified validation + class weights for balance
+* Fully reproducible in `projectrain.py`
+
+---
+
+## **Feedback**
+
+Suggestions and issues welcome.
+Open a GitHub [issue](https://github.com/your-username/SkyCast/issues) or submit a pull request.
 
 ---
 
-## 📬 Feedback & Contributions
-
-Contributions, bug reports, and feature requests are welcome!
-Please open an [issue](https://github.com/your-username/SkyCast/issues) or submit a pull request.
-
----
 
