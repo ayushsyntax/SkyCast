@@ -105,8 +105,3 @@ SkyCast/
 - Imbalance addressed with class weighting and stratified validation
 - All findings and visualization code included in `projectrain.py`
 
-## ✨ Summary
-
-SkyCast is designed for professionals and everyday users alike, delivering reliable rainfall probability predictions with an emphasis on interpretability, practical deployment, and robust scientific foundations. With integrated EDA libraries, a high-performance model, and user-first design, SkyCast enables insightful forecasting and supports further scientific analysis with ease.
-
-**SkyCast – Elevate your rainfall forecasting with professional-grade Python, EDA, and machine learning. 🌧️**
