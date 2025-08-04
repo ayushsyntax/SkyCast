@@ -4,7 +4,7 @@ import joblib
 import datetime
 
 st.set_page_config(page_title="SkyCast", page_icon="🌧️", layout="centered")
-st.title("🌧️ SkyCast – Simple Rain Predictor")
+st.title("🌧️ SkyCast –  Rain Predictor")
 
 # Load model
 try:
